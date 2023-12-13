@@ -1,0 +1,69 @@
+
+// Forex GOLD Investor
+// Developer's Site: forexroboteasy.com
+// Development Name: Forex Robot Easy Team
+
+// Scalping Trading Strategy
+void ScalpingStrategy() {
+    // Define entry criteria for scalping strategy
+    double entryPrice = GetEntryPrice(); // Function to get the entry price
+    double stopLoss = entryPrice - 10; // Set stop-loss level
+    double takeProfit = entryPrice + 10; // Set take-profit level
+
+    // Calculate lot size based on account balance and risk preferences
+    double accountBalance = GetAccountBalance(); // Function to get account balance
+    double riskPercentage = 0.02; // Set risk percentage
+    double lotSize = accountBalance * riskPercentage / 100;
+
+    // Open trade
+    OpenTrade(entryPrice, lotSize, stopLoss, takeProfit); // Function to open trade
+}
+
+// Time-based Trading Strategy
+void TimeBasedStrategy() {
+    // Define time intervals for opening and closing trades
+    int openHour = 9; // Set opening hour
+    int closeHour = 16; // Set closing hour
+
+    // Check if current time is within the defined time interval
+    int currentHour = GetCurrentHour(); // Function to get current hour
+    if (currentHour >= openHour && currentHour <= closeHour) {
+        // Calculate lot size based on account balance and risk preferences
+        double accountBalance = GetAccountBalance(); // Function to get account balance
+        double riskPercentage = 0.03; // Set risk percentage
+        double lotSize = accountBalance * riskPercentage / 100;
+
+        // Open trade
+        OpenTrade(GetEntryPrice(), lotSize, GetStopLoss(), GetTakeProfit()); // Function to open trade
+    }
+}
+
+// Intelligent Money Management
+void IntelligentMoneyManagement() {
+    // Calculate optimal lot size based on account balance and risk preferences
+    double accountBalance = GetAccountBalance(); // Function to get account balance
+    double riskPercentage = 0.05; // Set risk percentage
+    double optimalLotSize = accountBalance * riskPercentage / 100;
+
+    // Check if current lot size is less than the optimal lot size
+    double currentLotSize = GetCurrentLotSize(); // Function to get current lot size
+    if (currentLotSize < optimalLotSize) {
+        // Increase lot size
+        IncreaseLotSize(optimalLotSize - currentLotSize); // Function to increase lot size
+    } else if (currentLotSize > optimalLotSize) {
+        // Decrease lot size
+        DecreaseLotSize(currentLotSize - optimalLotSize); // Function to decrease lot size
+    }
+}
+
+// Main function
+void OnTick() {
+    // Execute scalping strategy
+    ScalpingStrategy();
+
+    // Execute time-based strategy
+    TimeBasedStrategy();
+
+    // Execute intelligent money management
+    IntelligentMoneyManagement();
+}
